@@ -49,7 +49,7 @@ int scroll2values[2]={0};
 int scroll2values[2]={0};
 int scroll2values[2]={0};
 
-int enter=0;
+int setup=0;
 
 int mod2=0;
 int mod8=0;
@@ -145,62 +145,272 @@ void loop(){
     }
   }
   
-  /*MENU INTERFACE CREATION*/
-  if(depthlevel==0&&scroll1max==0&&printed==0){
-    if(enter==0){
-      lcd.clear();
-      lcd.setCursor(0,0);
-      lcd.print("N°of screens    ");
-      lcd.setCursor(0,1);
-      lcd.print(numbers[scroll1]);
-      printed=1;
-    }
-    else if(enter==2){
-      lcd.clear();
-      lcd.setCursor(0,0);
-      lcd.print("N° of submenus  ");
-      lcd.setCursor(0,1);
-      lcd.print(numbers[scroll1]);
-      printed=1;
+  /*MODIFY MENU INTERFACE VISUALIZATION*/
+  if(depthlevel==0&&scroll1max==0&&setup==0&&printed==0){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Menu depth      ");
+    lcd.setCursor(0,1);
+    lcd.print(numbers[scroll1]);
+    printed=1;
   }
-  if(depthlevel==0&&scroll1max==0){
+  else if(depthlevel==0&&scroll1max==0&&setup==1&&printed==0){
+    lcd.setCursor(1,1);
+    lcd.print(numbers[scroll1]);
+    printed=1;
+  }
+  else if(scroll1max==0&&setup==2&&printed==0){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("1 level options ");
+    lcd.setCursor(0,1);
+    lcd.print(numbers[scroll1]);
+    printed=1;
+  }
+  else if(scroll1max==0&&setup==3&&printed==0){
+    lcd.setCursor(1,1);
+    lcd.print(numbers[scroll1]);
+    printed=1;
+  }
+  else if(scroll2max==0&&setup==4&&printed==0){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("2 level options ");
+    lcd.setCursor(0,1);
+    lcd.print(numbers[scroll1]);
+    printed=1;
+  }
+  else if(scroll2max==0&&setup==5&&printed==0){
+    lcd.setCursor(1,1);
+    lcd.print(numbers[scroll1]);
+    printed=1;
+  }
+  else if(scroll3max==0&&setup==6&&printed==0){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("3 level options ");
+    lcd.setCursor(0,1);
+    lcd.print(numbers[scroll1]);
+    printed=1;
+  }
+  else if(scroll3max==0&&setup==7&&printed==0){
+    lcd.setCursor(1,1);
+    lcd.print(numbers[scroll1]);
+    printed=1;
+  }
+  else if(scroll4max==0&&setup==8&&printed==0){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("4 level options ");
+    lcd.setCursor(0,1);
+    lcd.print(numbers[scroll1]);
+    printed=1;
+  }
+  else if(scroll4max==0&&setup==9&&printed==0){
+    lcd.setCursor(1,1);
+    lcd.print(numbers[scroll1]);
+    printed=1;
+  }
+  else if(scroll5max==0&&setup==10&&printed==0){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("5 level options ");
+    lcd.setCursor(0,1);
+    lcd.print(numbers[scroll1]);
+    printed=1;
+  }
+  else if(scroll5max==0&&setup==11&&printed==0){
+    lcd.setCursor(1,1);
+    lcd.print(numbers[scroll1]);
+    printed=1;
+  }
+  
+  /*MODIFY MENU INTERFACE INSTRUCTIONS*/
+  if(depthlevel==0&&scroll1max==0&&setup==0){
     val_forward=digitalRead(forward);
     if(val_forward!=forwardstate){
       forwardstate=val_forward;
       if(forwardstate==LOW){
-        if(enter==0){
-          depthlevelvalues[0]=numbers[scroll1];
-          enter=1;
+        depthlevelvalues[0]=numbers[scroll1];
+        scroll1=0;
+        setup=1;
+        printed=0;
+      }
+    }
+  }
+  if(depthlevel==0&&scroll1max==0&&setup==1){
+    val_forward=digitalRead(forward);
+    if(val_forward!=forwardstate){
+      forwardstate=val_forward;
+      if(forwardstate==LOW){
+        depthlevelvalues[1]=numbers[scroll1];
+        for(i=0;i<(size2-1);i++){
+          depthlevel=depthlevel+depthlevelvalues[i];
         }
-        else if(enter==1){
-          depthlevelvalues[0]=numbers[scroll1];
-          enter=2;
+        scroll1=0;
+        setup=2;
+        printed=0;
+      }
+    }
+  }
+  if(scroll1max==0&&setup==2){
+    val_forward=digitalRead(forward);
+    if(val_forward!=forwardstate){
+      forwardstate=val_forward;
+      if(forwardstate==LOW){
+        scroll1values[0]=numbers[scroll1];
+        scroll1=0;
+        setup=3;
+        printed=0;
+      }
+    }
+  }
+  if(scroll1max==0&&setup==3){
+    val_forward=digitalRead(forward);
+    if(val_forward!=forwardstate){
+      forwardstate=val_forward;
+      if(forwardstate==LOW){
+        scroll1values[1]=numbers[scroll1];
+        for(i=0;i<(size2-1);i++){
+          scroll1max=scroll1max+scroll1values[i];
         }
-          scroll1values[0]=numbers[scroll1];
-          enter=1;
+        scroll1=0;
+        setup=4;
+        printed=0;
+      }
+    }
+  }
+  if(scroll2max==0&&setup==4){
+    val_forward=digitalRead(forward);
+    if(val_forward!=forwardstate){
+      forwardstate=val_forward;
+      if(forwardstate==LOW){
+        scroll2values[0]=numbers[scroll1];
+        scroll1=0;
+        setup=5;
+        printed=0;
+      }
+    }
+  }
+  if(scroll2max==0&&setup==5){
+    val_forward=digitalRead(forward);
+    if(val_forward!=forwardstate){
+      forwardstate=val_forward;
+      if(forwardstate==LOW){
+        scroll2values[1]=numbers[scroll1];
+        for(i=0;i<(size2-1);i++){
+          scroll2max=scroll2max+scroll2values[i];
         }
-        else if(enter==1){
-          scroll1values[1]=numbers[scroll1];
-          enter=2;
-          for(i=0;i<(size2-1);i++){
-            scroll1max=scroll1max+scroll1values[i];
-          }
+        scroll1=0;
+        setup=6;
+        printed=0;
+      }
+    }
+  }
+  if(scroll3max==0&&setup==6){
+    val_forward=digitalRead(forward);
+    if(val_forward!=forwardstate){
+      forwardstate=val_forward;
+      if(forwardstate==LOW){
+        scroll3values[0]=numbers[scroll1];
+        scroll1=0;
+        setup=7;
+        printed=0;
+      }
+    }
+  }
+  if(scroll3max==0&&setup==7){
+    val_forward=digitalRead(forward);
+    if(val_forward!=forwardstate){
+      forwardstate=val_forward;
+      if(forwardstate==LOW){
+        scroll3values[1]=numbers[scroll1];
+        for(i=0;i<(size2-1);i++){
+          scroll3max=scroll3max+scroll3values[i];
         }
+        scroll1=0;
+        setup=8;
+        printed=0;
+      }
+    }
+  }
+  if(scroll4max==0&&setup==8){
+    val_forward=digitalRead(forward);
+    if(val_forward!=forwardstate){
+      forwardstate=val_forward;
+      if(forwardstate==LOW){
+        scroll4values[0]=numbers[scroll1];
+        scroll1=0;
+        setup=9;
+        printed=0;
+      }
+    }
+  }
+  if(scroll4max==0&&setup==9){
+    val_forward=digitalRead(forward);
+    if(val_forward!=forwardstate){
+      forwardstate=val_forward;
+      if(forwardstate==LOW){
+        scroll4values[1]=numbers[scroll1];
+        for(i=0;i<(size2-1);i++){
+          scroll4max=scroll4max+scroll4values[i];
+        }
+        scroll1=0;
+        setup=10;
+        printed=0;
+      }
+    }
+  }
+  if(scroll5max==0&&setup==10){
+    val_forward=digitalRead(forward);
+    if(val_forward!=forwardstate){
+      forwardstate=val_forward;
+      if(forwardstate==LOW){
+        scroll5values[0]=numbers[scroll1];
+        scroll1=0;
+        setup=11;
+        printed=0;
+      }
+    }
+  }
+  if(scroll5max==0&&setup==11){
+    val_forward=digitalRead(forward);
+    if(val_forward!=forwardstate){
+      forwardstate=val_forward;
+      if(forwardstate==LOW){
+        scroll5values[1]=numbers[scroll1];
+        for(i=0;i<(size2-1);i++){
+          scroll5max=scroll5max+scroll5values[i];
+        }
+        scroll1=0;
+        setup=12;
         printed=0;
       }
     }
   }
   
-  
   /*MENU NAVIGATION VARIABLES RESET*/
-  if(scroll1>2||scroll1<0){
-    scroll1=0;
+  if(setup<12){
+    if(scroll1>9||scroll1<0){
+      scroll1=0;
+    }
   }
-  if(scroll2>4||scroll2<0){
-    scroll2=0;
+  else{
+    if(scroll1>scroll1max||scroll1<0){
+      scroll1=0;
+    }
   }
-  if(scroll3>1||scroll3<0){
+  if(scroll2>scroll2max||scroll2<0){
+      scroll2=0;
+  }
+  if(scroll3>scroll3max||scroll3<0){
     scroll3=0;
+  }
+  if(scroll4>scroll4max||scroll4<0){
+    scroll4=0;
+  }
+  if(scroll5>scroll5max||scroll5<0){
+    scroll5=0;
   }
   
   /*MAIN MENU*/
